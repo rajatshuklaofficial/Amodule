@@ -6,6 +6,7 @@ import Landing from './component/layout/Landing';
 import Footer from './component/layout/Footer';
 import register from './component/auth/register';
 import login from './component/auth/login';
+import JobDetailsform from './component/JobDetailsForm/JobDetailsform';
 
 class App extends Component {
   render(){
@@ -17,6 +18,7 @@ class App extends Component {
       <div className="container">
       <Route exact path="/register" component={register}/>
       <Route exact path="/login" component={login}/>
+      <Route exact path="/JobDetaisform" component={JobDetailsform}/>
       </div>
       <Footer />
     </div>
