@@ -1,5 +1,6 @@
 import React ,{Component} from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 
 
@@ -24,7 +25,7 @@ class JobDetailsform extends Component{
 			heading: this.state.heading,
 			Description:this.state.Description
 		}
-		axios.post('api/users/newjob',newjob)
+		axios.post('http://localhost:5000/api/users/newjob',newjob)
 		.then(res=>console.log(res.data))
 		.catch(err=>console.log(err));
 	}

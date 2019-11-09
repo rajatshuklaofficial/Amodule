@@ -1,4 +1,6 @@
 import React ,{Component} from 'react'
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 
 class login extends Component{
@@ -22,6 +24,11 @@ class login extends Component{
 			email:this.state.email,
 			password:this.state.password
 		}
+		axios.post('http://localhost:5000/api/users/login',user)
+		.then(res=>{
+			{(res.data) ? <Redirect to="/JobDetaisform" /> : null }
+		})
+		.catch(err=>console.log(err));
 		console.log(user)
 	}
 	 render(){
