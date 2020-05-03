@@ -45,7 +45,7 @@ app.use('/api/posts',postsvar);
 app.listen(port,()=>console.log(`server is running at ${port}`));
 app.get('/',(req,res) => res.send("kitni bar yahi karoge?"));
 
-
+// Adding comment for testing git
 // Super users to be inserted here.
 function bootStrap(){
 const conn = mongoose.connection;
