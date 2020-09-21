@@ -25,9 +25,7 @@ class login extends Component{
 			password:this.state.password
 		}
 		axios.post('http://localhost:5000/api/users/login',user)
-		.then(res=>{
-			{(res.data) ? <Redirect to="/JobDetaisform" /> : null }
-		})
+		.then(res=>{console.log(res.data)})
 		.catch(err=>console.log(err));
 		console.log(user)
 	}
