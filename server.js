@@ -13,7 +13,8 @@ app.use(cors())
 
 const usersvar=require('./routes/api/users');
 const profilevar=require('./routes/api/profile');
-const postsvar=require('./routes/api/posts')
+const postsvar=require('./routes/api/posts');
+const jobvar = require('./routes/api/jobs');
 const user = require("./models/User");
 
 // Database url
@@ -40,6 +41,8 @@ bootStrap()
 app.use('/api/users',usersvar);
 app.use('/api/profile',profilevar);
 app.use('/api/posts',postsvar);
+app.use('/api/jobs',jobvar);
+
 
 
 app.listen(port,()=>console.log(`server is running at ${port}`));

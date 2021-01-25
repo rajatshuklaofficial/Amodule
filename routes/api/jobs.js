@@ -12,45 +12,28 @@ var corsOptions = {
 }
 
 const User1=require('../../models/User');
-const Roles=require('../../models/Role');
+const Job=require('../../models/Jobs');
 const key=require('../../config/keys');
 // API
 
 
-router.get('/test',(req,res)=>res.json({good:"good"}))
+router.get('/test',(req,res)=>res.json({good:"Job"}))
 
-router.post('/register',cors(corsOptions),(req,res)=>{
-	User1.findOne({email:req.body.email})
-	.then(user =>{
-		if (user) {
-			return res.status(400).json({email:'Email Already exists '})
-		}
-		else{
-			const avatar= gravatar.url(req.body.email,{
-				s:200,
-				r:'pg',
-				d:'mm'
-			})
-			const newuser= new User1({
-				name:req.body.name,
-				email:req.body.email,
-				phone:req.body.phone,
-				avatar,
-				password:req.body.password,
-				roles:req.body.role
-			});
-			bcrypt.genSalt(10,(err,salt)=>{
-				bcrypt.hash(newuser.password,salt,(err,hash)=>{
-					console.log(newuser)
-					if(err) throw err;
-					newuser.password=hash;
-					newuser.save()
-					.then(user=>res.json(user)).catch(err=>console.log(err));
-				})
-			})
-		}
-	})
+router.post('/postjob',cors(corsOptions),passport.authenticate('jwt',{session:false}),(req,res)=>{
+	Job.findOne({ user: req.user.id }).then(job => {
+      const newJob = {
+        title: req.body.title,
+        company: req.body.company,
+        location: req.body.location,
+        description: req.body.description,
+        status:req.body.status
+      };
 
+      // Add to exp array
+      job.unshift(newJob);
+
+      job.save().then(job => res.json(job));
+    });
 })
 
 router.post('/addrole',cors(corsOptions),(req,res)=>{
