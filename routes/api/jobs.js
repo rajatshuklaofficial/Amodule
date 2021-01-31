@@ -20,21 +20,46 @@ const key=require('../../config/keys');
 router.get('/test',(req,res)=>res.json({good:"Job"}))
 
 router.post('/postjob',cors(corsOptions),passport.authenticate('jwt',{session:false}),(req,res)=>{
+	console.log(req.body)
 	Job.findOne({ user: req.user.id }).then(job => {
-      const newJob = {
-        title: req.body.title,
-        company: req.body.company,
-        location: req.body.location,
-        description: req.body.description,
-        status:req.body.status
-      };
+		if (job) {
+	      const newJob = {
+	        title: req.body.title,
+	        company: req.body.company,
+	        location: req.body.location,
+	        description: req.body.description,
+	        status:req.body.status
+	      };
 
-      // Add to exp array
-      job.unshift(newJob);
+	      // Add to jobposts array
+	      job.jobposts.push(newJob);
+	      console.log(job)
+	      job.save().then(job => res.json(job));
+		}
+		else{
+		const newJob = new Job({
+			user:req.user.id,
+			jobposts:[{
+		        title: req.body.title,
+		        company: req.body.company,
+		        location: req.body.location,
+		        description: req.body.description,
+		        status:req.body.status
+			}]
+	      });
 
-      job.save().then(job => res.json(job));
+	      // Add to jobposts array
+	      newJob.save().then(job => res.json(job));
+		}
     });
 })
+
+router.get('/alljobs',cors(corsOptions),passport.authenticate('jwt',{session:false}),(req,res)=>{
+	Job.find({}).then(job => {
+		res.send(job)
+    });
+})
+
 
 router.post('/addrole',cors(corsOptions),(req,res)=>{
 	Roles.findOne({name:req.body.name})

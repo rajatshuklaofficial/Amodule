@@ -23,6 +23,7 @@ const port = process.env.PORT || 5000;
 // body-parser middleware
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }))
 
 // passport middleware
 app.use(passport.initialize());
