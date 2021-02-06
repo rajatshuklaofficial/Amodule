@@ -1,0 +1,11 @@
+.card {
+	height: auto;
+	margin: 10px;
+	padding: 5%;
+	width: 80%;
+	border-radius: 8px;
+	border:solid 5px coral;
+	background-color: transparent;
+	text-align: center;
+	display:inline-block;
+}
