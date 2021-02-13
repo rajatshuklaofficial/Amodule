@@ -14,10 +14,6 @@ class Navbar extends Component {
 
 			      <div className="collapse navbar-collapse" id="mobile-nav">
 			        <ul className="navbar-nav mr-auto">
-			          <li className="nav-item">
-			            <Link className="nav-link" to="/profiles"> Developers
-			            </Link>
-			          </li>
 			        </ul>
 
 			        <ul className="navbar-nav ml-auto">

@@ -20,41 +20,24 @@ const key=require('../../config/keys');
 router.get('/test',(req,res)=>res.json({good:"Job"}))
 
 router.post('/postjob',cors(corsOptions),passport.authenticate('jwt',{session:false}),(req,res)=>{
-	console.log(req.body)
-	Job.findOne({ user: req.user.id }).then(job => {
-		if (job) {
-	      const newJob = {
-	        title: req.body.title,
-	        company: req.body.company,
-	        location: req.body.location,
-	        description: req.body.description,
-	        status:req.body.status
-	      };
-
-	      // Add to jobposts array
-	      job.jobposts.push(newJob);
-	      console.log(job)
-	      job.save().then(job => res.json(job));
-		}
-		else{
+	try{
+		console.log(req.body)
 		const newJob = new Job({
-			user:req.user.id,
-			jobposts:[{
+			  	user: req.user.id,
 		        title: req.body.title,
 		        company: req.body.company,
 		        location: req.body.location,
 		        description: req.body.description,
 		        status:req.body.status
-			}]
-	      });
-
-	      // Add to jobposts array
-	      newJob.save().then(job => res.json(job));
-		}
-    });
+		      });
+		      console.log(newJob)
+		      newJob.save().then(job => res.json(job));
+	}catch(err){
+		res.send(err)
+	}
 })
 
-router.get('/alljobs',cors(corsOptions),passport.authenticate('jwt',{session:false}),(req,res)=>{
+router.get('/alljobs',cors(corsOptions),(req,res)=>{
 	Job.find({}).then(job => {
 		res.send(job)
     });
